@@ -16,6 +16,11 @@ const serverState = require('./CoreModules/State/Main');
 // Load the integrity module
 const serverIntegrityModule = require('./CoreModules/Integrity/Main');
 
+// Register the Shutdown Handler
+require('./CoreModules/ShutdownHandler/Main')(serverState, require('./CoreModules/Helpers.js'));
+
+let fs  = require('fs');
+
 log.info('Loaded Core Modules!');
 
 // Server Startup Functions.
@@ -24,7 +29,10 @@ async function checkSystemIntegrity(callback) {
     callback();
 }
 function saturateServerState(callback) {
-    callback();
+    let previousState = JSON.parse(fs.readFileSync('sathya-serverstate.json','utf8'));
+    serverState.setState(previousState, () => {
+        callback();
+    });
 }
 function loadExternalModules(callback) {
     let extModules = []; // Array of module init functions.

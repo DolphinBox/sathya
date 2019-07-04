@@ -11,8 +11,10 @@ class ServerState {
     // Function manipulate state (Don't mutate it directly)
     // Eventually this should be smart enough to prevent collisions using a queue or something.
     setState(newState, callback) {
-        this.state = {...this.state, ...newState}
-        callback();
+        this.state = {...this.state, ...newState};
+        if (callback && typeof callback === 'function') {
+            callback();
+        }
     }
 
     // "getters"

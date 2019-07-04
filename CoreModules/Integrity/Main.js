@@ -14,12 +14,17 @@ async function serverIntegrityModule(serverState) {
         const cpuInfo = await si.cpu();
         log.info(' -> Running on a ' + cpuInfo.manufacturer + ' ' + cpuInfo.brand);
         const osInfo = await si.osInfo();
-        if(osInfo.platform === "Linux" || osInfo.platform === "darwin") {
+        if(osInfo.platform === "linux" || osInfo.platform === "darwin") {
             log.info(' -> Supported Environment: ' + osInfo.distro + ' (' + osInfo.platform + ')');
         } else {
             log.info(' -> Unsupported Environment: ' + osInfo.distro + ' (' + osInfo.platform + ')');
         }
-
+        if (typeof Graal != 'undefined') {
+            log.info(' -> Supported Environment: Graal ' + Graal.versionJS + '  JS ' + Graal.versionGraalVM);
+            log.info('   -> Graal Emulating: Node ' + process.version + ' / V8 ' + process.versions.v8);
+        } else {
+            log.info(' -> Unsupported Environment: Node ' + process.version + ' / V8 ' + process.versions.v8);
+        }
         return;
     } catch (e) {
         console.log(e)
