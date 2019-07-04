@@ -10,21 +10,33 @@ async function serverIntegrityModule(serverState) {
     // -> make sure all Sathya files are there (checksum it too?)
     // etc
 
+    // Also Populate the state with system information
+
+    let systemInfo = {};
+
     try {
         const cpuInfo = await si.cpu();
         log.info(' -> Running on a ' + cpuInfo.manufacturer + ' ' + cpuInfo.brand);
+        systemInfo.cpu = cpuInfo.manufacturer + ' ' + cpuInfo.brand;
         const osInfo = await si.osInfo();
         if(osInfo.platform === "linux" || osInfo.platform === "darwin") {
             log.info(' -> Supported Environment: ' + osInfo.distro + ' (' + osInfo.platform + ')');
         } else {
             log.info(' -> Unsupported Environment: ' + osInfo.distro + ' (' + osInfo.platform + ')');
         }
+        systemInfo.os = osInfo.distro + ' (' + osInfo.platform + ')';
         if (typeof Graal != 'undefined') {
-            log.info(' -> Supported Environment: Graal ' + Graal.versionJS + '  JS ' + Graal.versionGraalVM);
+            log.info(' -> Supported Environment: GraalJS ' + Graal.versionJS + '  GraalVM ' + Graal.versionGraalVM);
             log.info('   -> Graal Emulating: Node ' + process.version + ' / V8 ' + process.versions.v8);
+            systemInfo.runtime = 'Graal ' + Graal.versionJS;
         } else {
             log.info(' -> Unsupported Environment: Node ' + process.version + ' / V8 ' + process.versions.v8);
+            systemInfo.runtime = 'Node ' + process.version;
         }
+
+        // Save the system info to the state.
+        serverState.setState({ systemInfo: systemInfo });
+
         return;
     } catch (e) {
         console.log(e)
