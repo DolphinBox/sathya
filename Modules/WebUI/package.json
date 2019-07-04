@@ -1,0 +1,14 @@
+{
+  "name": "sathya-webui",
+  "version": "1.0.0",
+  "description": "Web UI/Dashboard for Sathya Server",
+  "main": "Main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Seshan Ravikumar",
+  "license": "GPL-3.0",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}

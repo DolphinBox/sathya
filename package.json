@@ -1,0 +1,16 @@
+{
+  "name": "sathya-core",
+  "version": "0.0.1",
+  "description": "The main backend server for Sathya",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Seshan Ravikumar",
+  "license": "GPL-3.0",
+  "dependencies": {
+    "chalk": "^2.4.2",
+    "moment": "^2.24.0",
+    "systeminformation": "^4.12.0"
+  }
+}
