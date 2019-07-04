@@ -52,7 +52,7 @@ class App extends Component {
     async componentDidMount() {
         setTimeout(async () => {
             this.fadeSpinner();
-        }, 2000);
+        }, 4000);
         let initState = await callAPI();
         this.setState({testText: initState.data});
     }
