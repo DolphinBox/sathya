@@ -23,7 +23,7 @@ let fs  = require('fs');
 let ini = require('ini');
 
 // Load the INI config.
-var ini_config = ini.parse(fs.readFileSync('./config.ini', 'utf-8'));
+var ini_config = ini.parse(fs.readFileSync('./config.ini', 'utf-8')).sathyaserver;
 
 log.info('Loaded Core Modules!');
 
@@ -40,7 +40,10 @@ function saturateServerState(callback) {
 }
 
 function loadExternalModules(callback) {
-    let extModules = []; // Array of module init functions.
+    //let extModules = []; // Array of module init functions.
+    // Store the extModules in the state.
+    serverState.setState({ extModules: [] });
+
     const { readdirSync, statSync } = require('fs');
     const { join } = require('path');
 
@@ -50,15 +53,15 @@ function loadExternalModules(callback) {
 
     for(let i = 0; i < moduleList.length; i++) {
         log.info(' -> Loading Module: ' + moduleList[i]);
-        extModules[i] = require('./Modules/' + moduleList[i] + '/Main');
+        serverState.state.extModules[i] = require('./Modules/' + moduleList[i] + '/Main');
     }
 
     log.info('Starting External Modules... Please don\'t crash!');
-    for(let i = 0; i < extModules.length; i++) {
+    for(let i = 0; i < serverState.state.extModules.length; i++) {
         // Call the modules init function passing the server state.
         log.info(' -> Starting Module: ' + moduleList[i]);
         try {
-            extModules[i]('START', serverState, require('./CoreModules/Helpers.js'));
+            serverState.state.extModules[i]('START', serverState, require('./CoreModules/Helpers.js'));
         } catch(e) {
             log.error('   -> Module ' + moduleList[i] + ' has run into an error while starting: ' + e);
             console.error(e.stack);
@@ -75,19 +78,23 @@ function serverStartup() {
     log.info('Loading Server State...');
     saturateServerState(
         () => {
-        log.info('Checking the System Integrity...');
-        // Begin System Integrity Check.
-        checkSystemIntegrity(
-            () => {
-            // Begin Loading Modules.
-            log.info('Loading External Modules...');
-            loadExternalModules(
-                () => {
-                    log.info('Done Loading External Modules!');
+            log.info('Populating INI Config...');
+            serverState.delState('ini_config'); // Delete the old ini_config from state.
+            serverState.setState({ini_config: ini_config}); //  Store it in the state.
 
-                    log.info('~ Sathya Server has started!');
+            log.info('Checking the System Integrity...');
+            // Begin System Integrity Check.
+            checkSystemIntegrity(
+                () => {
+                    // Begin Loading Modules.
+                    log.info('Loading External Modules...');
+                    loadExternalModules(
+                        () => {
+                            log.info('Done Loading External Modules!');
+
+                            log.info('~ Sathya Server has started!');
+                        });
                 });
-            });
         });
 }
 serverStartup();

@@ -38,15 +38,18 @@ ServerState.setState(
 );
 ```
 
-setState simply takes the object you pass as an argument, and *merges* it with the existing state (behind the scenes, this is accomplished with the ... spread operator).
+setState simply takes the object you pass as an argument, and *merges* it with the existing state (behind the scenes, this is accomplished with the "..." spread operator).
 
-This means that setState will create a new property in the state if it does not exist, or replace an existing property with the new value passed.
+>This means that setState will create a new property in the state if it does not exist, or replace an existing property with the new value passed.
 
-In order to get the current state: `ServerState.state()`. This method simply returns the current state object.
+In order to get the current state: `ServerState.getState()`. This method simply returns the current state object.
+getState() returns a reference to the state object, and so it can also be directly manipulated this way.
 
+Your module should **only** modify it's own state "sub-object". Modules should only interact with each other through exposed 
+API's on the state.
 
-### Interaction using the ServerState ("Creating an API")
-Thus far we have only looked at the state storing JS properties, i.e simple values. However, the ServerState has another, very useful, feature: Exposing JS Functions as methods in the state.
+### Interaction using the ServerState (Creating a Module API)
+Thus far we have only looked at the state that stores JS properties, i.e simple values. However, the ServerState has another, very useful, feature: Exposing JS Functions as methods in the state.
 
 This particularly useful for *inter-module* interaction. That is, modules (and Sathya itself), can expose their own API using the server state.
 
@@ -70,12 +73,24 @@ ServerState.setState(
 
 In this example, the HelloWorld function is exposed at `ServerState.HelloModule.API.HelloWorldFunction()`.
 
-**Note:** When the state gets saved to disk, it becomes a JSON string using JSON.stringify. This means that while properties are saved, methods are not. Your module should recreate methods in the state everytime the server starts.
+**Note:** When the state gets saved to disk, it becomes a JSON string using JSON.stringify. This means that while properties are saved, methods are not. Your module should recreate methods in the state every time the server starts.
 
 ### Keep the ServerState Clean!
 Because the ServerState is used so heavily in a Sathya server, it can become quite large very quickly. It's up to the Module to prevent it's section of the state from becoming filled with garbage.
 
 An key concept is a Module should split it's state into temp state and permanent state. Modules should clear the temp state during startup and shutdown.
+
+### Deleting State Properties
+A common situation is to delete certain properties from the state (see above). The ServerState has a `delState()` function that can be used in two ways.
+The first behaviour of delState is when you want to delete a "root property". Root properties are properties/methods/objects that are not nested within any object in the state.
+```javascript
+ServerState.delState('HelloModule');
+```
+This will delete the HelloModule root property/object. Now let's say you want to remove the HelloWorldFunction method.
+```javascript
+ServerState.delState('HelloWorldFunction', 'HelloModule.API');
+```
+The first argument is the property to delete, and the second is where in the state (relative to root) the property is.
 
 ## Writing Modules in Java
 Sathya's Runtime is GraalVM. Graal is a so called "polyglot" virtual machine, which means it's capable of running multiple languages. 

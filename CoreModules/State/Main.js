@@ -22,6 +22,16 @@ class ServerState {
         return this.state;
     }
 
+    delState(property, state) {
+        if(typeof state == 'undefined') {
+            // Delete this root property
+            delete this.state[property];
+        } else {
+            // This is not a root property, delete using eval.
+            delete eval('this.state.' + state)[property];
+        }
+    }
+
 
 }
 

@@ -35,6 +35,8 @@ function init(action, sathyaServerState, sathyaHelpers) {
 
         });
 
+        // Create a seperate file for more routes.
+
         app.listen(port, () => helpers.log.info(`Sathya WebUI listening on port ${port}!`));
 
     } else {
