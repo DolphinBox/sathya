@@ -63,5 +63,8 @@ typings/
 # JetBrains
 .idea
 
-#Ignore the Sathya Runtime folder
+# Ignore the Sathya Runtime folder
 Runtime
+
+# Ignore the serverstate file
+sathya-serverstate.json

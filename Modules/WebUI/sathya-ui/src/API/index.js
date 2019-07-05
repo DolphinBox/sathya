@@ -1,9 +1,16 @@
 const axios = require('axios');
-export async function callAPI(endpoint) {
+
+let host = "http://localhost:3030/api/v1/";
+
+export async function getState() {
     try {
-        const response = await axios.get('http://localhost:3030/api/v1/state');
+        const response = await axios.get(host + 'state');
         return response;
     } catch (error) {
         console.error(error);
     }
+}
+
+export async function setState() {
+
 }

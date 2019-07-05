@@ -20,6 +20,10 @@ const serverIntegrityModule = require('./CoreModules/Integrity/Main');
 require('./CoreModules/ShutdownHandler/Main')(serverState, require('./CoreModules/Helpers.js'));
 
 let fs  = require('fs');
+let ini = require('ini');
+
+// Load the INI config.
+var ini_config = ini.parse(fs.readFileSync('./config.ini', 'utf-8'));
 
 log.info('Loaded Core Modules!');
 
@@ -34,6 +38,7 @@ function saturateServerState(callback) {
         callback();
     });
 }
+
 function loadExternalModules(callback) {
     let extModules = []; // Array of module init functions.
     const { readdirSync, statSync } = require('fs');
@@ -65,23 +70,24 @@ function loadExternalModules(callback) {
 
 // ~ Main Server Startup Sequence ~
 function serverStartup() {
-    log.info('Checking the System Integrity...');
-    // Begin System Integrity Check.
-    checkSystemIntegrity(
-        () => {
-            // Saturate the server state from disk.
-            log.info('Loading Server State...');
-            saturateServerState(
-                () => {
-                    // Begin Loading Modules.
-                    log.info('Loading External Modules...');
-                    loadExternalModules(
-                        () => {
-                            log.info('Done Loading External Modules!');
 
-                            log.info('~ Sathya Server has started!');
-                        });
+    // Saturate the server state from disk.
+    log.info('Loading Server State...');
+    saturateServerState(
+        () => {
+        log.info('Checking the System Integrity...');
+        // Begin System Integrity Check.
+        checkSystemIntegrity(
+            () => {
+            // Begin Loading Modules.
+            log.info('Loading External Modules...');
+            loadExternalModules(
+                () => {
+                    log.info('Done Loading External Modules!');
+
+                    log.info('~ Sathya Server has started!');
                 });
+            });
         });
 }
 serverStartup();

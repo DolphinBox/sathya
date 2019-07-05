@@ -1,1 +1,1 @@
-{"hello":"Hey!","systemInfo":{"cpu":"Intel® Core™ i3-4330","os":"Ubuntu (linux)","runtime":"Graal 19.1.0"}}
+{"hello":"Hey!","systemInfo":{"cpu":"Intel® Core™ i5-5250U","os":"Mac OS X (darwin)","runtime":"Graal 19.1.0"},"HelloModule":{"API":{}}}
