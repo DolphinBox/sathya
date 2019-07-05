@@ -137,3 +137,20 @@ edited offline/externally (this could be a plus).
 
 The third option you have is to bring your own config. Feel free to do whatever you want in your module's directory.
 
+## Background Services
+SathyaServer provides a service to regularly call a function in your module. For example, this is used in the Integrity 
+module to keep the server stats up to date in the ServerState.
+
+The BackgroundServices modules provides a function to register a new background task.
+```javascript
+serverState.getState().BackgroundServices.registerBackgroundTask(
+    {
+        name: "Integrity Module - System Stats",
+        task: ()=> {
+            console.log("This is a background service!");
+        }
+    }
+);
+```
+The `registerBackgroundTask()` function accepts a task object as an argument (which is the name of the task, and the 
+actual function to call). 
