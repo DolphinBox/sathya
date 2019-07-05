@@ -26,7 +26,7 @@ let fs  = require('fs');
 let ini = require('ini');
 
 // Load the INI config.
-var ini_config = ini.parse(fs.readFileSync('./config.ini', 'utf-8')).sathyaserver;
+let ini_config = ini.parse(fs.readFileSync('./config.ini', 'utf-8')).sathyaserver;
 
 log.info('Loaded Core Modules!');
 
@@ -35,7 +35,7 @@ async function checkSystemIntegrity() {
     await serverIntegrityModule(serverState);
 }
 async function saturateServerState() {
-    let previousState = await JSON.parse(fs.readFileSync('sathya-serverstate.json','utf8'));
+    let previousState = await JSON.parse(fs.readFileSync(ini_config.persist_state_file,'utf8'));
     await serverState.setState(previousState);
 }
 
@@ -93,7 +93,7 @@ async function serverStartup() {
 }
 
 // Start the server!
-serverStartup().then(()=> {
+serverStartup().then(() => {
     let endTime = process.hrtime(startTime);
     log.info('~ Sathya Server has started! (' + endTime[0] + 's ' + endTime[1] / 1000000 + 'ms)');
 });

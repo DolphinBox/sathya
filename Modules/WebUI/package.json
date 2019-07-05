@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Seshan Ravikumar",
-  "license": "GPL-3.0",
+  "license": "LGPL-3.0-only",
   "dependencies": {
     "cors": "^2.8.5",
     "express": "^4.17.1"

@@ -46,7 +46,7 @@ async function shutDownSequence(exitCode, signal) {
     }
 
     helpers.log.info('Saving the ServerState...');
-    fs.writeFileSync('sathya-serverstate.json', JSON.stringify(serverState.getState()), 'utf8');
+    fs.writeFileSync(serverState.getState().ini_config.persist_state_file, JSON.stringify(serverState.getState()), 'utf8');
 
     helpers.log.info('Goodbye!');
     helpers.log.info('---------------------------------------');

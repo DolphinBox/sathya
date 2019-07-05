@@ -4,10 +4,11 @@
   "description": "The main backend server for Sathya",
   "main": "index.js",
   "scripts": {
+    "start": "echo \"Run installDepends.sh first, then ./bootstrap-darwin for macOS and ./bootstrap-linux for Linux.\"",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Seshan Ravikumar",
-  "license": "GPL-3.0",
+  "license": "LGPL-3.0-only",
   "dependencies": {
     "chalk": "^2.4.2",
     "ini": "^1.3.5",
