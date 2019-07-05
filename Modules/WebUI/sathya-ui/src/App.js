@@ -146,6 +146,8 @@ class App extends Component {
                                         {moduleListJSX}
                                     </ul>
                                 </Box>
+                                <Box gridArea="a34" background="light-4" fill>
+
                                 <Box gridArea="a34" background="light-4" fill pad="medium">
                                     <Heading level="2" margin="none">Actions</Heading>
 
