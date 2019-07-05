@@ -26,7 +26,7 @@ let fs  = require('fs');
 let ini = require('ini');
 
 // Load the INI config.
-let ini_config = ini.parse(fs.readFileSync('./config.ini', 'utf-8')).sathyaserver;
+let ini_config = ini.parse(fs.readFileSync('./config.ini', 'utf-8'));
 
 log.info('Loaded Core Modules!');
 
@@ -35,7 +35,7 @@ async function checkSystemIntegrity() {
     await serverIntegrityModule(serverState);
 }
 async function saturateServerState() {
-    let previousState = await JSON.parse(fs.readFileSync(ini_config.persist_state_file,'utf8'));
+    let previousState = await JSON.parse(fs.readFileSync(ini_config.sathyaserver.persist_state_file,'utf8'));
     await serverState.setState(previousState);
 }
 
@@ -49,13 +49,13 @@ async function loadExternalModules() {
 
     // This one-liner is a function dirs() that returns an array of folders,
     const dirs = p => readdirSync(p).filter(f => statSync(join(p, f)).isDirectory());
-    let moduleList = dirs('./Modules');
+    let moduleList = dirs(serverState.getState().ini_config.sathyaserver.modules_directory);
 
     await serverState.setState({moduleList: moduleList});
 
     for(let i = 0; i < moduleList.length; i++) {
         log.info(' -> Loading Module: ' + moduleList[i]);
-        serverState.state.extModules[i] = require('./Modules/' + moduleList[i] + '/Main');
+        serverState.state.extModules[i] = require(serverState.getState().ini_config.sathyaserver.modules_directory + '/' + moduleList[i] + '/Main');
     }
 
     log.info('Starting External Modules... Please don\'t crash!');

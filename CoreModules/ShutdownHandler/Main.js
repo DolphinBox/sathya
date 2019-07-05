@@ -27,11 +27,11 @@ async function shutDownSequence(exitCode, signal) {
 
     // Set a shutdown timeout, in case a module hangs.
 
-    helpers.log.info('Shutdown timeout set to ' + serverState.getState().ini_config.shutdown_timeout);
+    helpers.log.info('Shutdown timeout set to ' + serverState.getState().ini_config.sathyaserver.shutdown_timeout);
     setTimeout(() => {
         helpers.log.warn('Reached shutdown timeout!');
         process.kill(process.pid, signal);
-    }, serverState.getState().ini_config.shutdown_timeout);
+    }, serverState.getState().ini_config.sathyaserver.shutdown_timeout);
 
     helpers.log.info('Shutting Down ' + serverState.state.extModules.length + ' Modules...');
     for(let i = 0; i < serverState.state.extModules.length; i++) {
@@ -46,7 +46,7 @@ async function shutDownSequence(exitCode, signal) {
     }
 
     helpers.log.info('Saving the ServerState...');
-    fs.writeFileSync(serverState.getState().ini_config.persist_state_file, JSON.stringify(serverState.getState()), 'utf8');
+    fs.writeFileSync(serverState.getState().ini_config.sathyaserver.persist_state_file, JSON.stringify(serverState.getState(), null, 4), 'utf8');
 
     helpers.log.info('Goodbye!');
     helpers.log.info('---------------------------------------');

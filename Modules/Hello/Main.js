@@ -23,8 +23,8 @@ async function init(action, sathyaServerState, sathyaHelpers) {
         );
 
         setTimeout(() => {
-            helpers.log.info(JSON.stringify(serverState.getState()));
             helpers.log.info(serverState.getState().HelloModule.API.HelloWorldFunction());
+            helpers.log.info(JSON.stringify(serverState.getState()));
         }, 2000);
     } else {
         helpers.log.info('Goodbye World!');

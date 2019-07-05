@@ -2,12 +2,11 @@ const express = require('express');
 const path = require('path');
 var cors = require('cors');
 
-const app = express();
-const port = 3030;
-
 let serverState;
 let helpers;
 let log;
+
+const app = express();
 
 async function init(action, sathyaServerState, sathyaHelpers) {
     if(action === 'START') {
@@ -36,6 +35,8 @@ async function init(action, sathyaServerState, sathyaHelpers) {
         });
 
         // Create a seperate file for more routes.
+
+        let port = serverState.getState().ini_config.webui.port;
 
         await app.listen(port);
         helpers.log.info(`Sathya WebUI listening on port ${port}!`)

@@ -23,8 +23,8 @@ Sathya passes three parameters to init:
 Your init function should keep sathyaServerState and sathyaHelpers stored in a local variable, so it can be accessed outside init() in your module.
 
 ## sathyaServerState
-The ServerState is a fundemental concept in Sathya. It is a JS object accessible and modifiable by Sathya and it's Modules.
-It is persisted to disk, and loaded every time the server starts.
+The ServerState is a fundamental concept in Sathya. It is a JS object accessible and modifiable by Sathya and it's Modules.
+It is persisted to disk, and loaded every time the server starts. Think of it like the "database++" of SathyaServer.
 
 Since the state is simply a JS object, you can store whatever you want in it.
 Never create methods or properties in the root level of the state object, create your own object (`state.Your_Module.whatever`)!
@@ -45,7 +45,7 @@ setState simply takes the object you pass as an argument, and *merges* it with t
 
 setState is also an async function, so you can await it as well (or use a callback);
 
->This means that setState will create a new property in the state if it does not exist, or replace an existing property with the new value passed.
+> This means that setState will create a new property in the state if it does not exist, or replace an existing property with the new value passed.
 
 In order to get the current state: `ServerState.getState()`. This method simply returns the current state object.
 If you need to directly manipulate the state (though this is discouraged), you can access it at `ServerState.state`.
@@ -121,3 +121,19 @@ The JVM class path is set to the Modules directory, so a Main.java file in the H
 Todo: document this further.
 
 You can learn more about JavaInterop here: https://github.com/graalvm/graaljs/blob/master/docs/user/JavaInterop.md
+
+## Config
+As a module writer you have the freedom to choose a persistent config for you module.
+
+SathyaServer provides two systems out of the box: The ServerState, and the config.ini file.
+
+The State is a good choice for config where you need something that can be easily modified in software, 
+and is persisted to disk. The downside is there is no default way for a user to modify the state, your module will 
+have to provide that.
+
+The config.ini file is loaded during the server startup. It's easily accessed through the state (`ServerState.getState().ini_config.YOUR_MODULE`), 
+and is easily modified by the user. The downside is you cannot modify the config.ini using setState, it can only be 
+edited offline/externally (this could be a plus).
+
+The third option you have is to bring your own config. Feel free to do whatever you want in your module's directory.
+
