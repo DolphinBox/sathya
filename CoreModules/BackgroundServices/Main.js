@@ -7,6 +7,7 @@ const log = new Helpers('Background Service Provider').log;
 
 let serverState;
 
+
 function registerBackgroundTask(taskObj) {
     serverState.state.BackgroundServices.registeredTasks.push(taskObj);
 }
@@ -15,13 +16,16 @@ function runBackgroundTasks() {
     // loop over each registered task.
     for(let i = 0; i < serverState.getState().BackgroundServices.registeredTasks.length; i++) {
         let task = serverState.getState().BackgroundServices.registeredTasks[i];
-        log.info('Calling Background Task "' + task.name + '"...');
-        task.task();
+        //log.info('Calling Background Task "' + task.name + '"...');
+        task.task(serverState);
     }
 }
 
 async function backgroundServicesModule(sathyaServerState, ini_config) {
     serverState = sathyaServerState;
+
+    // Clear the state first...
+    serverState.delState('BackgroundServices');
 
     // Add the register method to the state.
     await serverState.setState (

@@ -36,17 +36,23 @@ async function serverIntegrityModule(serverState) {
         }
 
         // Save the system info to the state.
-        await serverState.setState({ systemInfo: systemInfo });
+        serverState.setState({ systemInfo: systemInfo });
 
         // Set a background service to update some server stats.
-        /*serverState.getState().BackgroundServices.registerBackgroundTask(
+        serverState.state.BackgroundServices.registeredTasks.push(
             {
-                        name: "Integrity Module - System Stats",
-                        task: ()=> {
-                                console.log("THIS IS A BACKGROUND SERVICE!!!");
+                name: "Integrity Module - System Stats",
+                task: (serverState) => {
+                    serverState.setState(
+                        {
+                            systemInfo: {
+                                cpuUsage: "Hi"
+                            }
                         }
-                    }
-            );*/
+                    );
+                }
+            }
+        );
 
         return;
     } catch (e) {

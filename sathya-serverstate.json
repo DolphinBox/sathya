@@ -1,6 +1,7 @@
 {
     "hello": "Hey!",
     "systemInfo": {
+        "cpuUsage": "Hi",
         "cpu": "Intel® Core™ i3-4330",
         "os": "Ubuntu (linux)",
         "runtime": "Graal 19.1.0"
@@ -18,11 +19,19 @@
         "HelloJava",
         "WebUI"
     ],
+    "BackgroundServices": {
+        "registeredTasks": [
+            {
+                "name": "Integrity Module - System Stats"
+            }
+        ]
+    },
     "ini_config": {
         "sathyaserver": {
             "modules_directory": "./Modules",
             "persist_state_file": "./sathya-serverstate.json",
-            "shutdown_timeout": "120000"
+            "shutdown_timeout": "120000",
+            "background_interval": "1000"
         },
         "webui": {
             "port": "3030",

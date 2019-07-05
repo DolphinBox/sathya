@@ -28,6 +28,11 @@ let ini = require('ini');
 // Load the INI config.
 let ini_config = ini.parse(fs.readFileSync('./config.ini', 'utf-8'));
 
+// Load the server state from disk.
+log.info('Loading Server State...');
+let previousState = JSON.parse(fs.readFileSync(ini_config.sathyaserver.persist_state_file,'utf8'));
+serverState.setState(previousState);
+
 require('./CoreModules/BackgroundServices/Main')(serverState, ini_config);
 
 log.info('Loaded Core Modules!');
@@ -35,10 +40,6 @@ log.info('Loaded Core Modules!');
 // Server Startup Functions.
 async function checkSystemIntegrity() {
     await serverIntegrityModule(serverState);
-}
-async function saturateServerState() {
-    let previousState = await JSON.parse(fs.readFileSync(ini_config.sathyaserver.persist_state_file,'utf8'));
-    await serverState.setState(previousState);
 }
 
 async function loadExternalModules() {
@@ -76,9 +77,11 @@ async function loadExternalModules() {
 // ~ Main Server Startup Sequence ~
 async function serverStartup() {
 
+    /*
     // Saturate the server state from disk.
     log.info('Loading Server State...');
-    await saturateServerState();
+    await saturateServerState();*/
+
     log.info('Populating INI Config...');
     serverState.delState('ini_config'); // Delete the old ini_config from state.
     await serverState.setState({ini_config: ini_config}); //  Store it in the state.

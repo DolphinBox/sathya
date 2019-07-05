@@ -41,7 +41,7 @@ ServerState.setState(
 );
 ```
 
-setState simply takes the object you pass as an argument, and *merges* it with the existing state (behind the scenes, this is accomplished with the "..." spread operator).
+setState simply takes the object you pass as an argument, and *merges* it with the existing state (behind the scenes, this is done using the lodash _.merge() function).
 
 setState is also an async function, so you can await it as well (or use a callback);
 
@@ -102,6 +102,9 @@ Sathya's Runtime is GraalVM. Graal is a so called "polyglot" virtual machine, wh
 While Sathya itself is written is JavaScript, it runs on GraalJS, and thus can co-operate with different languages.
 
 Notably, since GraalJS is written in Java and runs on the JVM, Sathya modules can make use of Java in a few different ways.
+
+> This is a good time to note: JavaScript (JS) is not Java!
+
 ### Writings Modules in JS, but using Java libraries.
 The Java ecosystem comes with a number of useful and performant libraries, many of which are included in OpenJDK.
 While writing a Sathya module, you may find it useful to be able to call Java methods, whether it be to use a feature not easily available in JS, or to perform compute heavy tasks.
@@ -146,7 +149,7 @@ The BackgroundServices modules provides a function to register a new background 
 serverState.getState().BackgroundServices.registerBackgroundTask(
     {
         name: "Integrity Module - System Stats",
-        task: ()=> {
+        task: (serverState) => {
             console.log("This is a background service!");
         }
     }
