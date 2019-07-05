@@ -6,10 +6,13 @@ The entry point for a module is the Main.js file.
 
 ## Main.js spec
 There are two requirements for the Main.js file.
-* An `init(action, sathyaServerState, sathyaHelpers) {}` function.
+* An `async function init(action, sathyaServerState, sathyaHelpers) {}` function.
 * The init function exported (`module.exports = init;`)
 
 The init function is called by Sathya during the startup or shutdown of the server.
+
+> Note that init is an async function. When Sathya calls your module's init, it will be called with "await".
+> This is particularly useful during shutdown, so Sathya doesn't shutdown before your module finishes it's cleanup.
 
 Sathya passes three parameters to init:
 * action: A string that specifies whether init is being called during startup or shutdown.
@@ -40,10 +43,12 @@ ServerState.setState(
 
 setState simply takes the object you pass as an argument, and *merges* it with the existing state (behind the scenes, this is accomplished with the "..." spread operator).
 
+setState is also an async function, so you can await it as well (or use a callback);
+
 >This means that setState will create a new property in the state if it does not exist, or replace an existing property with the new value passed.
 
 In order to get the current state: `ServerState.getState()`. This method simply returns the current state object.
-getState() returns a reference to the state object, and so it can also be directly manipulated this way.
+If you need to directly manipulate the state (though this is discouraged), you can access it at `ServerState.state`.
 
 Your module should **only** modify it's own state "sub-object". Modules should only interact with each other through exposed 
 API's on the state.

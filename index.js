@@ -1,5 +1,8 @@
 console.log('~ Starting Sathya ~');
 
+// Time the server startup.
+let startTime = process.hrtime();
+
 // Load Core Modules
 console.log('Loading Core Modules...');
 
@@ -28,18 +31,15 @@ var ini_config = ini.parse(fs.readFileSync('./config.ini', 'utf-8')).sathyaserve
 log.info('Loaded Core Modules!');
 
 // Server Startup Functions.
-async function checkSystemIntegrity(callback) {
+async function checkSystemIntegrity() {
     await serverIntegrityModule(serverState);
-    callback();
 }
-function saturateServerState(callback) {
-    let previousState = JSON.parse(fs.readFileSync('sathya-serverstate.json','utf8'));
-    serverState.setState(previousState, () => {
-        callback();
-    });
+async function saturateServerState() {
+    let previousState = await JSON.parse(fs.readFileSync('sathya-serverstate.json','utf8'));
+    await serverState.setState(previousState);
 }
 
-function loadExternalModules(callback) {
+async function loadExternalModules() {
     //let extModules = []; // Array of module init functions.
     // Store the extModules in the state.
     serverState.setState({ extModules: [] });
@@ -51,6 +51,8 @@ function loadExternalModules(callback) {
     const dirs = p => readdirSync(p).filter(f => statSync(join(p, f)).isDirectory());
     let moduleList = dirs('./Modules');
 
+    await serverState.setState({moduleList: moduleList});
+
     for(let i = 0; i < moduleList.length; i++) {
         log.info(' -> Loading Module: ' + moduleList[i]);
         serverState.state.extModules[i] = require('./Modules/' + moduleList[i] + '/Main');
@@ -61,42 +63,39 @@ function loadExternalModules(callback) {
         // Call the modules init function passing the server state.
         log.info(' -> Starting Module: ' + moduleList[i]);
         try {
-            serverState.state.extModules[i]('START', serverState, require('./CoreModules/Helpers.js'));
+            await serverState.state.extModules[i]('START', serverState, require('./CoreModules/Helpers.js'));
         } catch(e) {
             log.error('   -> Module ' + moduleList[i] + ' has run into an error while starting: ' + e);
             console.error(e.stack);
         }
     }
-
-    callback();
 }
 
 // ~ Main Server Startup Sequence ~
-function serverStartup() {
+async function serverStartup() {
 
     // Saturate the server state from disk.
     log.info('Loading Server State...');
-    saturateServerState(
-        () => {
-            log.info('Populating INI Config...');
-            serverState.delState('ini_config'); // Delete the old ini_config from state.
-            serverState.setState({ini_config: ini_config}); //  Store it in the state.
+    await saturateServerState();
+    log.info('Populating INI Config...');
+    serverState.delState('ini_config'); // Delete the old ini_config from state.
+    await serverState.setState({ini_config: ini_config}); //  Store it in the state.
 
-            log.info('Checking the System Integrity...');
-            // Begin System Integrity Check.
-            checkSystemIntegrity(
-                () => {
-                    // Begin Loading Modules.
-                    log.info('Loading External Modules...');
-                    loadExternalModules(
-                        () => {
-                            log.info('Done Loading External Modules!');
+    log.info('Checking the System Integrity...');
+    // Begin System Integrity Check.
+    await checkSystemIntegrity();
 
-                            log.info('~ Sathya Server has started!');
-                        });
-                });
-        });
+    // Begin Loading Modules.
+    log.info('Loading External Modules...');
+    await loadExternalModules();
+
+    log.info('Done Loading External Modules!');
 }
-serverStartup();
+
+// Start the server!
+serverStartup().then(()=> {
+    let endTime = process.hrtime(startTime);
+    log.info('~ Sathya Server has started! (' + endTime[0] + 's ' + endTime[1] / 1000000 + 'ms)');
+});
 
 

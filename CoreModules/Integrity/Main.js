@@ -35,7 +35,7 @@ async function serverIntegrityModule(serverState) {
         }
 
         // Save the system info to the state.
-        serverState.setState({ systemInfo: systemInfo });
+        await serverState.setState({ systemInfo: systemInfo });
 
         return;
     } catch (e) {

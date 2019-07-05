@@ -1,1 +1,1 @@
-{"hello":"Hey!","systemInfo":{"cpu":"Intel® Core™ i3-4330","os":"Ubuntu (linux)","runtime":"Graal 19.1.0"},"HelloModule":{"API":{}},"extModules":[null,null,null],"ini_config":{"version":"DEVELOPMENT","persist_state_file":"./sathya-serverstate.json"}}
+{"hello":"Hey!","systemInfo":{"cpu":"Intel® Core™ i3-4330","os":"Ubuntu (linux)","runtime":"Graal 19.1.0"},"HelloModule":{"API":{}},"extModules":[null,null,null],"moduleList":["Hello","HelloJava","WebUI"],"ini_config":{"persist_state_file":"./sathya-serverstate.json","shutdown_timeout":"120000","version":"DEVELOPMENT"}}

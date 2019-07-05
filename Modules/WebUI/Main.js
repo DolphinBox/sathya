@@ -9,7 +9,7 @@ let serverState;
 let helpers;
 let log;
 
-function init(action, sathyaServerState, sathyaHelpers) {
+async function init(action, sathyaServerState, sathyaHelpers) {
     if(action === 'START') {
         // Map the state provider and helpers to local variables.
         serverState = sathyaServerState;
@@ -37,10 +37,12 @@ function init(action, sathyaServerState, sathyaHelpers) {
 
         // Create a seperate file for more routes.
 
-        app.listen(port, () => helpers.log.info(`Sathya WebUI listening on port ${port}!`));
+        await app.listen(port);
+        helpers.log.info(`Sathya WebUI listening on port ${port}!`)
+
 
     } else {
-
+        helpers.log.info('WebUI is shutting down...')
     }
 
 }

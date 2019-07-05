@@ -6,7 +6,7 @@ function HelloWorld() {
     return "Hello World";
 }
 
-function init(action, sathyaServerState, sathyaHelpers) {
+async function init(action, sathyaServerState, sathyaHelpers) {
     if(action === 'START') {
         serverState = sathyaServerState;
         helpers = new sathyaHelpers('Hello');
@@ -27,7 +27,7 @@ function init(action, sathyaServerState, sathyaHelpers) {
             helpers.log.info(serverState.getState().HelloModule.API.HelloWorldFunction());
         }, 2000);
     } else {
-        helpers.log.info('Goodbye World!')
+        helpers.log.info('Goodbye World!');
     }
 
 }
