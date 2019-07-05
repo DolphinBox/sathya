@@ -82,6 +82,9 @@ async function serverStartup() {
     log.info('Loading Server State...');
     await saturateServerState();*/
 
+    log.info('Loading Node Modules into ServerState');
+    require('./CoreModules/NodeModulesInState/Main')(serverState);
+
     log.info('Populating INI Config...');
     serverState.delState('ini_config'); // Delete the old ini_config from state.
     await serverState.setState({ini_config: ini_config}); //  Store it in the state.

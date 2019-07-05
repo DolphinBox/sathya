@@ -7,7 +7,7 @@ const log = new Helpers('Node Modules Provider').log;
 let serverState;
 
 
-async function backgroundServicesModule(sathyaServerState, ini_config) {
+async function NodeModulesInState(sathyaServerState) {
     serverState = sathyaServerState;
 
     // Clear the state first...
@@ -21,7 +21,7 @@ async function backgroundServicesModule(sathyaServerState, ini_config) {
                 moment: require('moment'),
                 chalk: require('chalk'),
                 ini: require('ini'),
-                
+                systeminformation: require('systeminformation')
             }
         }
     );
@@ -29,4 +29,4 @@ async function backgroundServicesModule(sathyaServerState, ini_config) {
     log.info('Registered Node Modules in the state!');
 }
 
-module.exports = backgroundServicesModule;
+module.exports = NodeModulesInState;

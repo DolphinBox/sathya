@@ -156,4 +156,8 @@ serverState.getState().BackgroundServices.registerBackgroundTask(
 );
 ```
 The `registerBackgroundTask()` function accepts a task object as an argument (which is the name of the task, and the 
-actual function to call). 
+actual function to call).
+
+## Exported Node Modules
+SathyaServer provides a few useful Node Modules through the ServerState (`ServerState.getState().NodeModules`) for 
+other modules to use.

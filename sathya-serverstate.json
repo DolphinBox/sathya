@@ -26,6 +26,10 @@
             }
         ]
     },
+    "NodeModules": {
+        "ini": {},
+        "systeminformation": {}
+    },
     "ini_config": {
         "sathyaserver": {
             "modules_directory": "./Modules",
