@@ -92,7 +92,12 @@ class App extends Component {
             return (
                 <LoadingScreen spinnerOpacity={this.state.spinnerOpacity}/>
             );
+        // Everything that executes after this is when the serverState is initially loaded.
 
+        let moduleListJSX = [];
+        for(let i = 0; i < this.state.serverState.moduleList.length; i++) {
+            moduleListJSX[i] = <li>{this.state.serverState.moduleList[i]}</li>
+        }
         return (
             <Grommet theme={theme} full>
                 { this.state.showSpinner && <LoadingScreen spinnerOpacity={this.state.spinnerOpacity}/> }
@@ -121,15 +126,28 @@ class App extends Component {
                             >
                                 <Box gridArea="a1" background="light-2" fill pad="medium">
                                     <Heading level="2" margin="none">System Info</Heading>
-                                    <hr />
-                                    <p>CPU: {this.state.serverState.systemInfo.cpu}</p>
-                                    <p>Base OS: {this.state.serverState.systemInfo.os}</p>
-                                    <p>Runtime: {this.state.serverState.systemInfo.runtime}</p>
+                                    <Box direction='row' flex overflow={{ horizontal: 'hidden' }}>
+                                        <Box flex align='stretch' justify='stretch'>
+                                            <p>CPU: {this.state.serverState.systemInfo.cpu}</p>
+                                            <p>Base OS: {this.state.serverState.systemInfo.os}</p>
+                                            <p>Runtime: {this.state.serverState.systemInfo.runtime}</p>
+                                        </Box>
+                                        <Box flex align='stretch' justify='stretch'>
+                                            <p>CPU Usage: {}</p>
+                                            <p>RAM Usage: {}</p>
+                                            <p>Uptime: {}</p>
+                                        </Box>
+                                    </Box>
+
                                 </Box>
                                 <Box gridArea="a2" background="light-3" fill pad="medium">
                                     <Heading level="2" margin="none">Loaded Modules</Heading>
+                                    <ul>
+                                        {moduleListJSX}
+                                    </ul>
                                 </Box>
-                                <Box gridArea="a34" background="light-4" fill>
+                                <Box gridArea="a34" background="light-4" fill pad="medium">
+                                    <Heading level="2" margin="none">Actions</Heading>
 
                                 </Box>
                             </Grid>

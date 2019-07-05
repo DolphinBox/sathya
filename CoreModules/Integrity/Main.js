@@ -2,6 +2,7 @@ const si = require('systeminformation');
 const Helpers = require('../Helpers');
 const log = new Helpers('SathyaServer').log;
 
+// AKA The System Information Module
 
 async function serverIntegrityModule(serverState) {
     // Basically make sure the server is OK
@@ -36,6 +37,16 @@ async function serverIntegrityModule(serverState) {
 
         // Save the system info to the state.
         await serverState.setState({ systemInfo: systemInfo });
+
+        // Set a background service to update some server stats.
+        /*serverState.getState().BackgroundServices.registerBackgroundTask(
+            {
+                        name: "Integrity Module - System Stats",
+                        task: ()=> {
+                                console.log("THIS IS A BACKGROUND SERVICE!!!");
+                        }
+                    }
+            );*/
 
         return;
     } catch (e) {

@@ -19,6 +19,8 @@ function init(sathyaServerState, sathyaHelpers) {
         nodeCleanup.uninstall(); // Unregister the nodeCleanup handler.
         return false;
     });
+
+    helpers.log.info('Started Shutdown Handler Module!');
 }
 
 async function shutDownSequence(exitCode, signal) {

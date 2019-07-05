@@ -28,6 +28,8 @@ let ini = require('ini');
 // Load the INI config.
 let ini_config = ini.parse(fs.readFileSync('./config.ini', 'utf-8'));
 
+require('./CoreModules/BackgroundServices/Main')(serverState, ini_config);
+
 log.info('Loaded Core Modules!');
 
 // Server Startup Functions.
