@@ -7,6 +7,11 @@ if ! [ -x "$(command -v node)" ]; then
   exit 1
 fi
 
+if ! [ -x "$(command -v wget)" ]; then
+  echo 'Error: wget is not installed.' >&2
+  exit 1
+fi
+
 # Download the Graal Runtime
 echo "Downloading the GraalVM Runtime..."
 mkdir Runtime
