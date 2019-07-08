@@ -158,6 +158,8 @@ serverState.getState().BackgroundServices.registerBackgroundTask(
 The `registerBackgroundTask()` function accepts a task object as an argument (which is the name of the task, and the 
 actual function to call).
 
+The frequency of background tasks being called is defined in the `config.ini`.
+
 ## Exported Node Modules
 SathyaServer provides a few useful Node Modules through the ServerState (`ServerState.getState().NodeModules`) for 
 other modules to use.
