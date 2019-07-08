@@ -9,27 +9,6 @@
     "HelloModule": {
         "API": {}
     },
-    "extModules": [
-        null,
-        null,
-        null
-    ],
-    "moduleList": [
-        "Hello",
-        "HelloJava",
-        "WebUI"
-    ],
-    "BackgroundServices": {
-        "registeredTasks": [
-            {
-                "name": "Integrity Module - System Stats"
-            }
-        ]
-    },
-    "NodeModules": {
-        "ini": {},
-        "systeminformation": {}
-    },
     "ini_config": {
         "sathyaserver": {
             "modules_directory": "./Modules",

@@ -1,18 +1,23 @@
-const express = require('express');
+let express;
+let cors;
 const path = require('path');
-var cors = require('cors');
 
 let serverState;
 let helpers;
 let log;
 
-const app = express();
+let app; // = express();
 
 async function init(action, sathyaServerState, sathyaHelpers) {
     if(action === 'START') {
         // Map the state provider and helpers to local variables.
         serverState = sathyaServerState;
         helpers = new sathyaHelpers('WebUI');
+
+        // Start express
+        express = serverState.getState().NodeModules.express;
+        cors = serverState.getState().NodeModules.cors;
+        app = express();
 
         // Express middleware
         app.use(cors());

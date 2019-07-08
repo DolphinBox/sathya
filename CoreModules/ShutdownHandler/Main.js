@@ -47,6 +47,12 @@ async function shutDownSequence(exitCode, signal) {
         }
     }
 
+    helpers.log.info('Cleaning Up...');
+    serverState.delState('BackgroundServices');
+    serverState.delState('NodeModules');
+    serverState.delState('extModules');
+    serverState.delState('moduleList');
+
     helpers.log.info('Saving the ServerState...');
     fs.writeFileSync(serverState.getState().ini_config.sathyaserver.persist_state_file, JSON.stringify(serverState.getState(), null, 4), 'utf8');
 

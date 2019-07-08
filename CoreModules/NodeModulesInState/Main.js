@@ -13,15 +13,27 @@ async function NodeModulesInState(sathyaServerState) {
     // Clear the state first...
     serverState.delState('NodeModules');
 
+    log.info('Loading Node Modules...');
+    let lodash = require('lodash');
+    let moment = require('moment');
+    let chalk = require('chalk');
+    let ini = require('ini');
+    let systeminformation = require('systeminformation');
+
+    let express = require('express');
+    let cors = require('cors');
+
     // Add the register method to the state.
     await serverState.setState (
         {
             NodeModules: {
-                lodash: require('lodash'),
-                moment: require('moment'),
-                chalk: require('chalk'),
-                ini: require('ini'),
-                systeminformation: require('systeminformation')
+                lodash: lodash,
+                moment: moment,
+                chalk: chalk,
+                ini: ini,
+                systeminformation: systeminformation,
+                express: express,
+                cors: cors
             }
         }
     );

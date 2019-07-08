@@ -20,7 +20,7 @@ async function serverIntegrityModule(serverState) {
         log.info(' -> Running on a ' + cpuInfo.manufacturer + ' ' + cpuInfo.brand);
         systemInfo.cpu = cpuInfo.manufacturer + ' ' + cpuInfo.brand;
         const osInfo = await si.osInfo();
-        if(osInfo.platform === "linux" || osInfo.platform === "darwin") {
+        if(osInfo.platform === "linux" || osInfo.platform === "darwin") { // todo Test on Windows
             log.info(' -> Supported Environment: ' + osInfo.distro + ' (' + osInfo.platform + ')');
         } else {
             log.info(' -> Unsupported Environment: ' + osInfo.distro + ' (' + osInfo.platform + ')');

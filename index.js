@@ -43,7 +43,11 @@ async function checkSystemIntegrity() {
 }
 
 async function loadExternalModules() {
-    //let extModules = []; // Array of module init functions.
+
+    // Cleanup State first.
+    serverState.delState('extModules');
+    serverState.delState('moduleList');
+
     // Store the extModules in the state.
     serverState.setState({ extModules: [] });
 
@@ -53,6 +57,14 @@ async function loadExternalModules() {
     // This one-liner is a function dirs() that returns an array of folders,
     const dirs = p => readdirSync(p).filter(f => statSync(join(p, f)).isDirectory());
     let moduleList = dirs(serverState.getState().ini_config.sathyaserver.modules_directory);
+
+    // Remove the disabled modules from the module list.
+    let disabledModules = fs.readFileSync(ini_config.sathyaserver.modules_directory + '/DisabledModules','utf8').split('\n');
+    for(let i = 0; i < disabledModules.length; i++) {
+        serverState.getState().NodeModules.lodash.remove(moduleList, function(e) {
+            return e === disabledModules[i];
+        });
+    }
 
     await serverState.setState({moduleList: moduleList});
 
@@ -83,7 +95,7 @@ async function serverStartup() {
     await saturateServerState();*/
 
     log.info('Loading Node Modules into ServerState');
-    require('./CoreModules/NodeModulesInState/Main')(serverState);
+    await require('./CoreModules/NodeModulesInState/Main')(serverState);
 
     log.info('Populating INI Config...');
     serverState.delState('ini_config'); // Delete the old ini_config from state.
