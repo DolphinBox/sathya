@@ -14,7 +14,7 @@ Modules could be...
 
 Sathya Modules can be written in JavaScript/Node or Java (Thanks to Sathya's Runtime: GraalVM).
 
-** Sathya is the perfect platform to build a backend server, IoT node, Kiosk, etc **
+**Sathya is the perfect platform to build a backend server, IoT node, Kiosk, etc**
 
 > SathyaServer is still under development, but the core features are complete.
 
