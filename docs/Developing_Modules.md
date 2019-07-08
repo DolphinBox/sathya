@@ -161,3 +161,13 @@ actual function to call).
 ## Exported Node Modules
 SathyaServer provides a few useful Node Modules through the ServerState (`ServerState.getState().NodeModules`) for 
 other modules to use.
+
+Module | Export 
+--- | ---
+[Lodash](https://lodash.com/) | `NodeModules.lodash` 
+[Moment](https://momentjs.com/) | `NodeModules.moment`
+[Chalk](https://github.com/chalk/chalk) | `NodeModules.chalk`
+[ini](https://www.npmjs.com/package/ini) | `NodeModules.ini`
+[System Information](https://www.npmjs.com/package/systeminformation) | `NodeModules.systeminformation`
+[Express](https://expressjs.com/) | `NodeModules.express`
+[Express CORS](https://expressjs.com/en/resources/middleware/cors.html) | `NodeModules.cors`
