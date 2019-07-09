@@ -18,10 +18,13 @@ The entry point for a module is the Main.js file.
   * [Writing Modules in Java](#writing-modules-in-java)
     + [Writings Modules in JS, but using Java libraries.](#writings-modules-in-js--but-using-java-libraries)
     + [Writing Modules in Java](#writing-modules-in-java-1)
+  * [Sathya Polyglot](#sathya-polyglot)
   * [Config](#config)
+  * [Databases](#databases)
   * [Background Services](#background-services)
   * [Exported Node Modules](#exported-node-modules)
   * [Disabling Modules](#disabling-modules)
+  * [Sathya PubSub](#sathya-pubsub)
 
 ## Main.js spec
 There are two requirements for the Main.js file.
@@ -261,3 +264,4 @@ To fire an event:
 ```javascript
 serverState.getState().pubsub.emit('sathya-shutdown');
 ```
+
