@@ -45,6 +45,7 @@ elif [[ "$OSTYPE" == "darwin"* ]]; then
         npm install --nodedir=$PWD/Runtime/darwin/Contents/Home/jre/languages/js --build-from-source
 else
         echo "Unknown/Unsupported OS Type."
+        echo "Supported OS': Darwin (macOS), GNU/Linux"
         exit 1
 fi
 
