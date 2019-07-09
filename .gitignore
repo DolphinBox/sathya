@@ -66,5 +66,6 @@ typings/
 # Ignore the Sathya Runtime folder
 Runtime
 
-# Ignore the serverstate file
+# Ignore the serverstate file and DB file
 sathya-serverstate.json
+sathyadb.sqlite

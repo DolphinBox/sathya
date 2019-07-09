@@ -32,8 +32,12 @@ log.info("This is Sathya " + ini_config.sathyaserver.version + " build " + ini_c
 
 // Load the server state from disk.
 log.info('Loading Server State...');
-let previousState = JSON.parse(fs.readFileSync(ini_config.sathyaserver.persist_state_file,'utf8'));
-serverState.setState(previousState);
+try {
+    let previousState = JSON.parse(fs.readFileSync(ini_config.sathyaserver.persist_state_file,'utf8'));
+    serverState.setState(previousState);
+} catch (e) {
+    log.info('There is no state file yet.')
+}
 
 // In case this has been left over.
 serverState.setTmpState({
