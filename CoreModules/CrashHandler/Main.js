@@ -9,14 +9,14 @@ function init() {
         process.exit(1);
     });
     // Handle crashes related to promises and async/await
-    process.on('unhandledRejection', (err, p) => {
+    /*process.on('unhandledRejection', (err, p) => {
         console.error('----------------------------------------------------------------------');
         console.error('~ CRASH - Sathya has run into an unrecoverable error and had to stop ~');
         console.error('  -> [' + (new Date).toUTCString() + '] Promise: ' + p);
         console.error(err.stack);
         console.error('----------------------------------------------------------------------');
         process.exit(1);
-    });
+    });*/
 }
 
 

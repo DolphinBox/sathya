@@ -20,7 +20,7 @@ class ServerState {
     }
     async setTmpState(newState, callback) {
         //this.state = {...this.state, ...newState};
-        this.state = _.merge(this.state.tmp, newState);
+        this.state.tmp = _.merge(this.state.tmp, newState);
         if (callback && typeof callback === 'function') {
             callback();
         }

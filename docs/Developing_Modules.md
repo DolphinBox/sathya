@@ -44,6 +44,26 @@ Sathya passes three parameters to init:
 
 Your init function should keep sathyaServerState and sathyaHelpers stored in a local variable, so it can be accessed outside init() in your module.
 
+A simple Module boilerplate:
+```javascript
+let ServerState;
+let helpers;
+
+async function init(action, sathyaServerState, sathyaHelpers) {
+    if(action === 'START') {
+        ServerState = sathyaServerState;
+        helpers = new sathyaHelpers('ModuleName');
+
+        
+    } else {
+        helpers.log.info('Goodbye!');
+    }
+
+}
+module.exports = init;
+```
+
+
 ## sathyaServerState
 The ServerState is a fundamental concept in Sathya. It is a JS object accessible and modifiable by Sathya and it's Modules.
 It is persisted to disk, and loaded every time the server starts. Think of it like the "database++" of SathyaServer.

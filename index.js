@@ -35,6 +35,11 @@ log.info('Loading Server State...');
 let previousState = JSON.parse(fs.readFileSync(ini_config.sathyaserver.persist_state_file,'utf8'));
 serverState.setState(previousState);
 
+// In case this has been left over.
+serverState.setTmpState({
+    SathyaServer: { hasStarted: false }
+});
+
 require('./CoreModules/BackgroundServices/Main')(serverState, ini_config);
 
 // Load the PubSub system
@@ -124,6 +129,11 @@ async function serverStartup() {
 serverStartup().then(() => {
     let endTime = process.hrtime(startTime);
     log.info('~ Sathya Server has started! (' + endTime[0] + 's ' + endTime[1] / 1000000 + 'ms)');
+
+    // Mark that everything has started.
+    serverState.setTmpState({
+       SathyaServer: { hasStarted: true }
+    });
 });
 
 

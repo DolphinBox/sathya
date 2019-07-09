@@ -22,5 +22,6 @@
     "sqlite": "^3.0.3",
     "systeminformation": "^4.12.0"
   },
-  "devDependencies": {}
+  "devDependencies": {
+  }
 }
