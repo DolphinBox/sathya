@@ -5,7 +5,7 @@ class ServerState {
     constructor() {
         // The magical state
         this.state = {
-            hello: "Hey!"
+            tmp: {} // Create the tmp state.
         }
     }
 
@@ -18,10 +18,20 @@ class ServerState {
             callback();
         }
     }
+    async setTmpState(newState, callback) {
+        //this.state = {...this.state, ...newState};
+        this.state = _.merge(this.state.tmp, newState);
+        if (callback && typeof callback === 'function') {
+            callback();
+        }
+    }
 
     // "getters"
     getState() {
         return this.state;
+    }
+    getTmpState() {
+        return this.state.tmp;
     }
 
     delState(property, state) {

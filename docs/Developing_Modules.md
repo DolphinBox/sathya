@@ -1,8 +1,27 @@
+
+
 # Sathya Module API
 Plugins for Sathya are designed as CommenJS (Node) modules.
 
 Plugins must be contained in a folder in the "Modules" directory.
 The entry point for a module is the Main.js file.
+
+## Table of Contents
+- [Sathya Module API](#sathya-module-api)
+  * [Main.js spec](#mainjs-spec)
+  * [sathyaServerState](#sathyaserverstate)
+    + [Working with the ServerState](#working-with-the-serverstate)
+      - [Temporary State](#temporary-state)
+    + [Interaction using the ServerState (Creating a Module API)](#interaction-using-the-serverstate--creating-a-module-api-)
+    + [Keep the ServerState Clean!](#keep-the-serverstate-clean-)
+    + [Deleting State Properties](#deleting-state-properties)
+  * [Writing Modules in Java](#writing-modules-in-java)
+    + [Writings Modules in JS, but using Java libraries.](#writings-modules-in-js--but-using-java-libraries)
+    + [Writing Modules in Java](#writing-modules-in-java-1)
+  * [Config](#config)
+  * [Background Services](#background-services)
+  * [Exported Node Modules](#exported-node-modules)
+  * [Disabling Modules](#disabling-modules)
 
 ## Main.js spec
 There are two requirements for the Main.js file.
@@ -52,6 +71,13 @@ If you need to directly manipulate the state (though this is discouraged), you c
 
 Your module should **only** modify it's own state "sub-object". Modules should only interact with each other through exposed 
 API's on the state.
+
+#### Temporary State
+Sathya also provides a temporary state that is cleared every shutdown. This is useful for storing state that doesn't need 
+to be persisted to disk. The state is available at `ServerState.getState().tmp`.
+
+Sathya also provides the `ServerState.getTmpState()` and `ServerState.setTmpState()` utility functions, where the root 
+state is set to the tmp object.
 
 ### Interaction using the ServerState (Creating a Module API)
 Thus far we have only looked at the state that stores JS properties, i.e simple values. However, the ServerState has another, very useful, feature: Exposing JS Functions as methods in the state.
@@ -178,3 +204,6 @@ Module | Export
 [System Information](https://www.npmjs.com/package/systeminformation) | `NodeModules.systeminformation`
 [Express](https://expressjs.com/) | `NodeModules.express`
 [Express CORS](https://expressjs.com/en/resources/middleware/cors.html) | `NodeModules.cors`
+
+## Disabling Modules
+The `DisabledModules` file in the Modules folder contains a list of Modules that should not be loaded (line separated).

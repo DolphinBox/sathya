@@ -14,11 +14,12 @@
             "modules_directory": "./Modules",
             "persist_state_file": "./sathya-serverstate.json",
             "shutdown_timeout": "120000",
-            "background_interval": "1000"
+            "background_interval": "1000",
+            "version": "DEVELOPMENT",
+            "build": "GIT"
         },
         "webui": {
-            "port": "3030",
-            "version": "DEVELOPMENT"
+            "port": "3030"
         }
     }
 }

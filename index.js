@@ -28,6 +28,8 @@ let ini = require('ini');
 // Load the INI config.
 let ini_config = ini.parse(fs.readFileSync('./config.ini', 'utf-8'));
 
+log.info("This is Sathya " + ini_config.sathyaserver.version + " build " + ini_config.sathyaserver.build);
+
 // Load the server state from disk.
 log.info('Loading Server State...');
 let previousState = JSON.parse(fs.readFileSync(ini_config.sathyaserver.persist_state_file,'utf8'));
@@ -88,7 +90,6 @@ async function loadExternalModules() {
 
 // ~ Main Server Startup Sequence ~
 async function serverStartup() {
-
     /*
     // Saturate the server state from disk.
     log.info('Loading Server State...');
