@@ -12,7 +12,9 @@ Modules could be...
 * a GUI Touch Interface
 * anything you want!
 
-Sathya Modules can be written in JavaScript/Node or Java (Thanks to Sathya's Runtime: GraalVM).
+Sathya Modules can be written in JavaScript/Node or Java (Thanks to Sathya's Runtime: GraalVM). 
+
+Modules can even hook directly into other languages, like Python, Ruby, R, other JVM-based languages like Scala, Groovy, Kotlin, Clojure, and even LLVM-based languages such as C and C++. 
 
 **Sathya is the perfect platform to build a backend server, IoT node, Kiosk, etc**
 

@@ -130,7 +130,7 @@ While Sathya itself is written is JavaScript, it runs on GraalJS, and thus can c
 Notably, since GraalJS is written in Java and runs on the JVM, Sathya modules can make use of Java in a few different ways.
 
 > This is a good time to note: JavaScript (JS) is not Java!
-
+> Another nice feature is that you can use any JVM-based language: Scala, Groovy, Kotlin, Clojure, etc.
 ### Writings Modules in JS, but using Java libraries.
 The Java ecosystem comes with a number of useful and performant libraries, many of which are included in OpenJDK.
 While writing a Sathya module, you may find it useful to be able to call Java methods, whether it be to use a feature not easily available in JS, or to perform compute heavy tasks.
@@ -152,6 +152,22 @@ As you saw in the previous example, Classes can be called from JS. Thus, you can
 The JVM class path is set to the Modules directory, so a Main.java file in the HelloJava module can be accessed at the class HelloJava.Main
 
 You can learn more about JavaInterop here: https://github.com/graalvm/graaljs/blob/master/docs/user/JavaInterop.md
+
+## Sathya Polyglot
+Like the above examples using Java, Thanks to GraalVM, Sathya Modules can also interop with a number of additional languages.
+* Python
+* Ruby
+* R
+* LLVM (C/C++)
+and potentially more.
+
+For example, to call an R function from your Module:
+```javascript
+console.log(Polyglot.eval('R', 'runif(100)')[0]);
+// = 0.8198353068437427
+```
+
+You can learn more about Graal Polyglot here: https://www.graalvm.org/docs/reference-manual/polyglot/
 
 ## Config
 As a module writer you have the freedom to choose a persistent config for you module.
