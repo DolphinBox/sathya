@@ -43,11 +43,11 @@ ServerState.setState(
 
 setState simply takes the object you pass as an argument, and *merges* it with the existing state (behind the scenes, this is done using the lodash _.merge() function).
 
-setState is also an async function, so you can await it as well (or use a callback);
+> This means that setState will create a new property in the state if it does not exist, or replace an existing property with the new value passed. Unlike the ES ...spread operator, the lodash merge function performs a deep merge.
 
-> This means that setState will create a new property in the state if it does not exist, or replace an existing property with the new value passed.
+setState is also an async function, so you can await it as well (or pass a callback instead).
 
-In order to get the current state: `ServerState.getState()`. This method simply returns the current state object.
+**The `ServerState.getState()` function will return the current state object.**
 If you need to directly manipulate the state (though this is discouraged), you can access it at `ServerState.state`.
 
 Your module should **only** modify it's own state "sub-object". Modules should only interact with each other through exposed 
@@ -76,7 +76,7 @@ ServerState.setState(
 );
 ```
 
-In this example, the HelloWorld function is exposed at `ServerState.HelloModule.API.HelloWorldFunction()`.
+In this example, the HelloWorld function is exposed at `ServerState.getState().HelloModule.API.HelloWorldFunction()`.
 
 **Note:** When the state gets saved to disk, it becomes a JSON string using JSON.stringify. This means that while properties are saved, methods are not. Your module should recreate methods in the state every time the server starts.
 
@@ -109,6 +109,8 @@ Notably, since GraalJS is written in Java and runs on the JVM, Sathya modules ca
 The Java ecosystem comes with a number of useful and performant libraries, many of which are included in OpenJDK.
 While writing a Sathya module, you may find it useful to be able to call Java methods, whether it be to use a feature not easily available in JS, or to perform compute heavy tasks.
 
+> In some cases, Java can be several times faster than JS.
+
 As an example, let's use the BigInteger library. Calling BigInteger is as easy as:
 ```javascript
 var BigInteger = Java.type('java.math.BigInteger');
@@ -117,11 +119,11 @@ console.log(BigInteger.valueOf(2).pow(100).toString(16));
 The first line is essentially a "require" line, except instead of a Node Module, it's a Java Class.
 From there on, you can call BigInteger as if it were a native JS function!
 ### Writing Modules in Java
-As you saw in the previous example, Classes can be called from JS. Thus, you can write your own Java classes, add them to your module directory, and call them from JS.
+As you saw in the previous example, Classes can be called from JS. Thus, you can write your own Java classes, add them to your module directory, and call them from JS. 
+
+> You will, at minimum, still need a Main.js file to call your Java code. Further, you will need to continue to use JS to interact with the rest of Sathya, since features like the ServerState are only available in the JS layer. A good practice with Java interop is write chunks of business logic in Java as various methods, and have them "glued" together in JS. This way, your Java methods can pass data through the JS layer and interact with the rest of Sathya.
 
 The JVM class path is set to the Modules directory, so a Main.java file in the HelloJava module can be accessed at the class HelloJava.Main
-
-Todo: document this further.
 
 You can learn more about JavaInterop here: https://github.com/graalvm/graaljs/blob/master/docs/user/JavaInterop.md
 
@@ -139,6 +141,9 @@ and is easily modified by the user. The downside is you cannot modify the config
 edited offline/externally (this could be a plus).
 
 The third option you have is to bring your own config. Feel free to do whatever you want in your module's directory.
+
+## Databases
+Besides using the ServerState to store data in a "NoSQL" style, your module is free to require external databases (MySQL, Postgre, MSSQL, Redis, Mongo, etc).
 
 ## Background Services
 SathyaServer provides a service to regularly call a function in your module. For example, this is used in the Integrity 
