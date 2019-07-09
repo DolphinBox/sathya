@@ -26,6 +26,10 @@ if [[ "$OSTYPE" == "linux-gnu" ]]; then
         mv graalvm-ce-19.1.0 linux
         cd ../
         #export PATH="$PWD/Runtime/linux/bin:$PATH" # Use the Graal Node and NPM
+
+        # Root Directory (main Sathya node modules)
+        echo "Installing Main NPM dependencies... (using Graal node-gyp for Linux)"
+        npm install --nodedir=$PWD/Runtime/linux/jre/languages/js --build-from-source
 elif [[ "$OSTYPE" == "darwin"* ]]; then
         echo "Detected Platform macOS"
         wget https://github.com/oracle/graal/releases/download/vm-19.1.0/graalvm-ce-darwin-amd64-19.1.0.tar.gz
@@ -35,14 +39,15 @@ elif [[ "$OSTYPE" == "darwin"* ]]; then
         mv graalvm-ce-19.1.0 darwin
         cd ../
         #export PATH="$PWD/Runtime/darwin/Contents/Home/bin:$PATH" # Use the Graal Node and NPM
+
+        # Root Directory (main Sathya node modules)
+        echo "Installing Main NPM dependencies... (using Graal node-gyp for Darwin)"
+        npm install --nodedir=$PWD/Runtime/darwin/Contents/Home/jre/languages/js --build-from-source
 else
         echo "Unknown/Unsupported OS Type."
         exit 1
 fi
 
-# Root Directory (main Sathya node modules)
-echo "Installing Main NPM dependencies..."
-npm install
 
 # WebUI Dependencies
 echo "Installing WebUI Module dependencies..."

@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "description": "The main backend server for Sathya",
   "main": "index.js",
+  "repository": "https://github.com/DolphinBox/sathya",
   "scripts": {
     "start": "echo \"Run installDepends.sh first, then ./bootstrap-darwin for macOS and ./bootstrap-linux for Linux.\"",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -17,6 +18,9 @@
     "lodash": "^4.17.11",
     "moment": "^2.24.0",
     "node-cleanup": "^2.1.2",
+    "sql-template-strings": "^2.2.2",
+    "sqlite": "^3.0.3",
     "systeminformation": "^4.12.0"
-  }
+  },
+  "devDependencies": {}
 }

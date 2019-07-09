@@ -169,7 +169,25 @@ edited offline/externally (this could be a plus).
 The third option you have is to bring your own config. Feel free to do whatever you want in your module's directory.
 
 ## Databases
-Besides using the ServerState to store data in a "NoSQL" style, your module is free to require external databases (MySQL, Postgre, MSSQL, Redis, Mongo, etc).
+Sathya comes with SathyaDB, a full SQL database with async/await support.
+> Behind the scenes, SathyaDB uses sqlite. Since sqlite uses a native C++ driver, and we include additional JS caching, it is quite performant.
+
+The database is exposed at `ServerState.getState().SQL.db`.
+
+To run a SQL Query:
+```javascript
+let SQL = ServerState.getState().NodeModules.sql_template;
+let db = ServerState.getState().SQL.db;
+async function doSomeSQLQuery() {
+    const data = await db.all(SQL`SELECT author FROM books WHERE name = ${book} AND author = ${author}`);
+}
+```
+You may have noticed the import for `sql_template`. This is a useful module that lets you use ES6 tagged strings (letting you do `${book}`) to easily create prepared statements.
+
+You can read more about the SQLite API at: https://github.com/kriasoft/node-sqlite and at: https://github.com/mapbox/node-sqlite3/
+
+Besides using SathyaDB, your module is free to require external databases (MySQL, Postgre, MSSQL, Redis, Mongo, etc).
+> It's also worth noting that the ServerState itself is sufficient as a "NoSQL" database. SathyaDB is great when you need a relational DB.
 
 ## Background Services
 SathyaServer provides a service to regularly call a function in your module. For example, this is used in the Integrity 
@@ -207,3 +225,21 @@ Module | Export
 
 ## Disabling Modules
 The `DisabledModules` file in the Modules folder contains a list of Modules that should not be loaded (line separated).
+
+## Sathya PubSub
+Sathya provides a simple Node EventEmitter instance through the state.
+
+The instance is exposed at `ServerState.getState().pubsub`.
+
+To register a listener:
+```javascript
+serverState.getState().pubsub.on('sathya-shutdown', () => {
+    log.info('Clearing Background Services...');
+    clearInterval(interval);
+});
+```
+
+To fire an event:
+```javascript
+serverState.getState().pubsub.emit('sathya-shutdown');
+```

@@ -37,6 +37,9 @@ serverState.setState(previousState);
 
 require('./CoreModules/BackgroundServices/Main')(serverState, ini_config);
 
+// Load the PubSub system
+require('./CoreModules/PubSub/Main')(serverState);
+
 log.info('Loaded Core Modules!');
 
 // Server Startup Functions.
@@ -97,6 +100,10 @@ async function serverStartup() {
 
     log.info('Loading Node Modules into ServerState');
     await require('./CoreModules/NodeModulesInState/Main')(serverState);
+
+    // Load SathyaDB
+    log.info('Loading SathyaDB...');
+    await require('./CoreModules/SQLDatabase/Main')(serverState);
 
     log.info('Populating INI Config...');
     serverState.delState('ini_config'); // Delete the old ini_config from state.

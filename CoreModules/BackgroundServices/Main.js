@@ -38,7 +38,11 @@ async function backgroundServicesModule(sathyaServerState, ini_config) {
     );
 
     // Call the background tasks at a regular interval.
-    setInterval(runBackgroundTasks, ini_config.sathyaserver.background_interval);
+    let interval = setInterval(runBackgroundTasks, ini_config.sathyaserver.background_interval);
+    serverState.getState().pubsub.on('sathya-shutdown', () => {
+        log.info('Clearing Background Services...');
+        clearInterval(interval);
+    });
     log.info('Started Background Services Module!');
 }
 

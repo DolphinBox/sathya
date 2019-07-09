@@ -7,6 +7,7 @@ let helpers;
 let log;
 
 let app; // = express();
+let server;
 
 async function init(action, sathyaServerState, sathyaHelpers) {
     if(action === 'START') {
@@ -43,12 +44,13 @@ async function init(action, sathyaServerState, sathyaHelpers) {
 
         let port = serverState.getState().ini_config.webui.port;
 
-        await app.listen(port);
+        server = await app.listen(port);
         helpers.log.info(`Sathya WebUI listening on port ${port}!`)
 
 
     } else {
-        helpers.log.info('WebUI is shutting down...')
+        helpers.log.info('WebUI is shutting down...');
+        server.close();
     }
 
 }

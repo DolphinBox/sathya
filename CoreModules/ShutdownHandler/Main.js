@@ -47,21 +47,34 @@ async function shutDownSequence(exitCode, signal) {
         }
     }
 
+    helpers.log.info('Sending shutdown event...');
+    serverState.getState().pubsub.emit('sathya-shutdown');
+
+    helpers.log.info('Stopping SathyaDB...');
+    serverState.getState().SQL.db.close();
+
     helpers.log.info('Cleaning Up...');
+
     // SathyaServer states.
     serverState.delState('BackgroundServices');
     serverState.delState('NodeModules');
     serverState.delState('extModules');
     serverState.delState('moduleList');
+    serverState.delState('pubsub');
+    serverState.delState('SQL');
     // Delete tmp state
     serverState.delState('tmp');
 
     helpers.log.info('Saving the ServerState...');
     fs.writeFileSync(serverState.getState().ini_config.sathyaserver.persist_state_file, JSON.stringify(serverState.getState(), null, 4), 'utf8');
 
-    helpers.log.info('Goodbye!');
-    helpers.log.info('---------------------------------------');
-    process.kill(process.pid, signal);
+    helpers.log.info('Pausing to let processes clean up...');
+    setTimeout(() => {
+        helpers.log.info('Goodbye!');
+        helpers.log.info('---------------------------------------');
+
+        process.kill(process.pid, signal);
+    }, 4000);
 }
 
 module.exports = init;
