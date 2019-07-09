@@ -101,13 +101,13 @@ async function serverStartup() {
     log.info('Loading Node Modules into ServerState');
     await require('./CoreModules/NodeModulesInState/Main')(serverState);
 
-    // Load SathyaDB
-    log.info('Loading SathyaDB...');
-    await require('./CoreModules/SQLDatabase/Main')(serverState);
-
     log.info('Populating INI Config...');
     serverState.delState('ini_config'); // Delete the old ini_config from state.
     await serverState.setState({ini_config: ini_config}); //  Store it in the state.
+
+    // Load SathyaDB
+    log.info('Loading SathyaDB...');
+    await require('./CoreModules/SQLDatabase/Main')(serverState);
 
     log.info('Checking the System Integrity...');
     // Begin System Integrity Check.

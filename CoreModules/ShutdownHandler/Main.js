@@ -20,6 +20,10 @@ function init(sathyaServerState, sathyaHelpers) {
         return false;
     });
 
+    serverState.setState({
+        shutDownSequence: shutDownSequence
+    });
+
     helpers.log.info('Started Shutdown Handler Module!');
 }
 
@@ -55,6 +59,9 @@ async function shutDownSequence(exitCode, signal) {
 
     helpers.log.info('Cleaning Up...');
 
+    // Keep the INI before we clear it
+    let ini_config = serverState.getState().ini_config;
+
     // SathyaServer states.
     serverState.delState('BackgroundServices');
     serverState.delState('NodeModules');
@@ -62,11 +69,12 @@ async function shutDownSequence(exitCode, signal) {
     serverState.delState('moduleList');
     serverState.delState('pubsub');
     serverState.delState('SQL');
+    serverState.delState('ini_config');
     // Delete tmp state
     serverState.delState('tmp');
 
     helpers.log.info('Saving the ServerState...');
-    fs.writeFileSync(serverState.getState().ini_config.sathyaserver.persist_state_file, JSON.stringify(serverState.getState(), null, 4), 'utf8');
+    fs.writeFileSync(ini_config.sathyaserver.persist_state_file, JSON.stringify(serverState.getState(), null, 4), 'utf8');
 
     helpers.log.info('Pausing to let processes clean up...');
     setTimeout(() => {

@@ -19,7 +19,7 @@ async function SathyaDB(sathyaServerState) {
     serverState.delState('SQL');
 
     // Open the Database from disk.
-    db = await sqlite.open('./sathyadb.sqlite', { cached: true });
+    db = await sqlite.open(serverState.getState().ini_config.sathyaserver.sathya_db_file, { cached: true });
 
     // Add the register method to the state.
     await serverState.setState (
