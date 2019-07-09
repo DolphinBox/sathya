@@ -222,6 +222,8 @@ Module | Export
 [System Information](https://www.npmjs.com/package/systeminformation) | `NodeModules.systeminformation`
 [Express](https://expressjs.com/) | `NodeModules.express`
 [Express CORS](https://expressjs.com/en/resources/middleware/cors.html) | `NodeModules.cors`
+[Node SQLite](https://github.com/kriasoft/node-sqlite) | `NodeModules.sqlite`
+[SQL Template Strings](https://github.com/felixfbecker/node-sql-template-strings) | `NodeModules.sql_template`
 
 ## Disabling Modules
 The `DisabledModules` file in the Modules folder contains a list of Modules that should not be loaded (line separated).
