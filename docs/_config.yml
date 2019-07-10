@@ -1,1 +1,5 @@
 theme: jekyll-theme-slate
+show_downloads: true
+github:
+  zip_url: https://github.com/DolphinBox/sathya-installers/releases/tag/v1.0-Beta.1-Linux
+  tar_url: https://github.com/DolphinBox/sathya-installers/releases/tag/v1.0-Beta.1-Linux
