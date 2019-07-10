@@ -2,6 +2,8 @@
 
 Sathya is a framework for building servers. It's versatile, and builds the base of a full server stack.
 
+![alt text](./stack.png "SathyaServer is the base. An API Server, Business Logic, Database, it's all Modules")
+
 Sathya is comprised of *Modules*. Modules are what give Sathya it's functionality. Each SathyaServer is unique, with 
 it's own combination of Modules.
 
