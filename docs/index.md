@@ -2,25 +2,25 @@
 
 Sathya is a framework for building servers. It's versatile, and builds the base of a full server stack.
 
-![alt text](./stack.png "SathyaServer is the base. An API Server, Business Logic, Database, it's all Modules")
+![alt text](./stack2.png "SathyaServer is the base. An API Server, Business Logic, Database, it's all Modules")
 
 Sathya is comprised of *Modules*. Modules are what give Sathya it's functionality. Each SathyaServer is unique, with 
 it's own combination of Modules.
 
-Modules could be...
+Sathya Modules let you build *your* cloud. Modules could be...
 * a Web Server
 * a File Server
-* a custom REST API
+* a custom REST API for an App
 * a GUI Touch Interface
-* anything you want!
+* ...anything you want!
 
 Sathya Modules can be written in JavaScript/Node or Java (Thanks to Sathya's Runtime: GraalVM). 
 
-Modules can even hook directly into other languages, like Python, Ruby, R, other JVM-based languages like Scala, Groovy, Kotlin, Clojure, and even LLVM-based languages such as C and C++. 
+Modules can be written in the language of your choice, and interoperate with the rest of Sathya. **Python, Ruby, R, JVM-based languages like Java, Scala, Groovy, Kotlin, Clojure, and even LLVM-based languages such as C and C++**. It's your choice. 
 
-**Sathya is the perfect platform to build a backend server, IoT node, Kiosk, etc**
+**Sathya is the perfect platform to build a backend server, IoT Device, Kiosk, etc**.
 
-> SathyaServer is still under development, but the core features are complete.
+> SathyaServer is still under development, but the core features are complete and ready to try out.
 
 ## Getting Started
 Until an official, supported, version of SathyaServer is released, you can try it from source.
