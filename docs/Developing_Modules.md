@@ -191,7 +191,50 @@ console.log(Polyglot.eval('R', 'runif(100)')[0]);
 // = 0.8198353068437427
 ```
 
-You can learn more about Graal Polyglot here: https://www.graalvm.org/docs/reference-manual/polyglot/
+You can learn more about Graal Polyglot here: [https://www.graalvm.org/docs/reference-manual/polyglot/]
+
+### Writing Modules in C/C++/Rust/etc
+
+If you ever need to write a high-performance module, a module that needs to interact with the system on a low level,  
+write a module that hooks into a legacy system, or something else, Sathya's LLVM Polyglot has got you covered!
+
+Sathya is able to directly integrate with code written in low-level languages that support being compiled by LLVM into bitcode.
+
+Let's look at a simple Hello World C program:
+
+```c
+#include <stdio.h>
+
+int main() {
+    printf("Hello from LLVM C!\n");
+    return 0;
+}
+```
+
+Then, compile it with clang.
+
+```bash
+clang -g -c -O1 -emit-llvm hello.c
+```
+
+The important flags here are `-g`, `-O1`, and `--emit-llvm`. They enable debug info, set the optimization level, and compile the 
+program into LLVM bitcode, instead of the resulting machine code.
+
+> Sathya's runtime, GraalVM, will dynamically compile the bitcode into machine code.
+
+Then, to call the `main()` function from your Module:
+
+```javascript
+let helloc = Polyglot.evalFile("llvm", __dirname + "/hello.bc");
+helloc.main();
+```
+
+`__dirname` points to the folder that contains your Module, and `hello.bc` is the resulting file from the clang command.
+
+This is, obviously, a simple example. Programs more any complex than this (for example, when you want pass data between JS and C), 
+you'll need to use Graal's Polyglot C library.
+
+**Learn more about using C in Sathya here: [https://www.graalvm.org/docs/reference-manual/languages/llvm/#interoperability]**
 
 ## Config
 As a module writer you have the freedom to choose a persistent config for you module.
@@ -264,7 +307,7 @@ Module | Export
 [Express CORS](https://expressjs.com/en/resources/middleware/cors.html) | `NodeModules.cors`
 [Node SQLite](https://github.com/kriasoft/node-sqlite) | `NodeModules.sqlite`
 [SQL Template Strings](https://github.com/felixfbecker/node-sql-template-strings) | `NodeModules.sql_template`
-
+[ShellJS](https://github.com/shelljs/shelljs) | `NodeModules.shell`
 ## Disabling Modules
 The `DisabledModules` file in the Modules folder contains a list of Modules that should not be loaded (line separated).
 

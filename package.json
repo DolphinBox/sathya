@@ -18,6 +18,7 @@
     "lodash": "^4.17.11",
     "moment": "^2.24.0",
     "node-cleanup": "^2.1.2",
+    "shelljs": "^0.8.3",
     "sql-template-strings": "^2.2.2",
     "sqlite": "^3.0.3",
     "systeminformation": "^4.12.0"

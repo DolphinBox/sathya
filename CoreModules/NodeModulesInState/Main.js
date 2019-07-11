@@ -26,6 +26,8 @@ async function NodeModulesInState(sathyaServerState) {
     const sqlite = require('sqlite');
     const sql_template = require('sql-template-strings');
 
+    const shell = require('shelljs');
+
     // Add the register method to the state.
     await serverState.setState (
         {
@@ -38,7 +40,8 @@ async function NodeModulesInState(sathyaServerState) {
                 express: express,
                 cors: cors,
                 sqlite: sqlite,
-                sql_template: sql_template
+                sql_template: sql_template,
+                shell: shell
             }
         }
     );
