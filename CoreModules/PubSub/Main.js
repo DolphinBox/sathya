@@ -11,7 +11,7 @@ async function SathyaPubSub(sathyaServerState) {
     serverState = sathyaServerState;
 
     // Clear the state first...
-    serverState.delState('pubpub');
+    serverState.delState('pubsub');
 
     // Add the pubsub to the state.
     await serverState.setState (
