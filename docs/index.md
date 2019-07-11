@@ -56,6 +56,7 @@ The Modules folder is where Sathya will load modules from (this can be configure
 
 ### For Developers
 * [Developing Modules](Developing_Modules)
+* [SathyaShell](SathyaShell.md)
 * [Legal FAQ](Legal_FAQ)
 ### For IT
 * [Deployment Guide](Deployment_Guide)

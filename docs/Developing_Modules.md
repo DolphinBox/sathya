@@ -308,6 +308,7 @@ Module | Export
 [Node SQLite](https://github.com/kriasoft/node-sqlite) | `NodeModules.sqlite`
 [SQL Template Strings](https://github.com/felixfbecker/node-sql-template-strings) | `NodeModules.sql_template`
 [ShellJS](https://github.com/shelljs/shelljs) | `NodeModules.shell`
+[Yargs](https://github.com/yargs/yargs) | `NodeModules.yargs`
 ## Disabling Modules
 The `DisabledModules` file in the Modules folder contains a list of Modules that should not be loaded (line separated).
 
@@ -329,3 +330,8 @@ To fire an event:
 serverState.getState().pubsub.emit('sathya-shutdown');
 ```
 
+You can also fire an event with a payload:
+```javascript
+serverState.getState().pubsub.emit('sathyashell-command', {cmd: "Something"});
+```
+(The payload will be passed as an argument to the event listener. `(payload) => { payload.cmd }`)

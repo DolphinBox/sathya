@@ -28,6 +28,8 @@ async function NodeModulesInState(sathyaServerState) {
 
     const shell = require('shelljs');
 
+    const yargs = require('yargs');
+
     // Add the register method to the state.
     await serverState.setState (
         {
@@ -41,7 +43,8 @@ async function NodeModulesInState(sathyaServerState) {
                 cors: cors,
                 sqlite: sqlite,
                 sql_template: sql_template,
-                shell: shell
+                shell: shell,
+                yargs: yargs
             }
         }
     );

@@ -49,6 +49,9 @@ require('./CoreModules/BackgroundServices/Main')(serverState, ini_config);
 // Load the PubSub system
 require('./CoreModules/PubSub/Main')(serverState);
 
+// Load the shell
+require('./CoreModules/SathyaShell/Main')(serverState);
+
 log.info('Loaded Core Modules!');
 
 // Server Startup Functions.
