@@ -10,6 +10,8 @@ int main() {
 
     printf("Starting Sathya Runtime...\n");
 
+    //chdir("/opt/sathya/");
+
     char *argv[4];
     argv[0] = "./Runtime/linux/bin/node"; // GraalJS Binary (Node implementation in Java)
     argv[1] = "--jvm"; // Start GraalJS in JVM mode to allow access to Java from NodeJS

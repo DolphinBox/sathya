@@ -51,17 +51,17 @@ fi
 
 
 # WebUI Dependencies
-echo "Installing WebUI Module dependencies..."
-cd Modules/WebUI
-npm install
-echo "Installing WebUI React dependencies..."
-cd sathya-ui
-npm install
-echo "Building the ReactUI..."
-npm run-script build
+#echo "Installing WebUI Module dependencies..."
+#cd Modules/WebUI
+#npm install
+#echo "Installing WebUI React dependencies..."
+#cd sathya-ui
+#npm install
+#echo "Building the ReactUI..."
+#npm run-script build
 
 # Back to root
-cd ../../../
+#cd ../../../
 
 echo "Done!"
 echo "To start Sathya use ./bootstrap-linux for Linux and ./bootstrap-darwin for macOS"
