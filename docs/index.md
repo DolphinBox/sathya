@@ -4,6 +4,9 @@ Sathya is a framework for building servers. It's versatile, and builds the base 
 
 ![alt text](./stack2.png "SathyaServer is the base. An API Server, Business Logic, Database, it's all Modules")
 
+
+> Sathya 1.0 Beta 1 is available for testing! [Download it for Linux](https://github.com/DolphinBox/sathya-installers/releases/tag/v1.0-Beta.1-Linux)
+
 Sathya is comprised of *Modules*. Modules are what give Sathya it's functionality. Each SathyaServer is unique, with 
 it's own combination of Modules.
 
